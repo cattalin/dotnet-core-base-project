@@ -1,3 +1,7 @@
+
+appsettings.Local.json
+
+
 *.swp
 *.*~
 project.lock.json

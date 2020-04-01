@@ -1,23 +1,16 @@
-﻿using Core.Config;
+﻿using Infrastructure.Config;
 using Core.Database.Entities;
-using Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System;
+using System.Linq;
 
 namespace Core.Database.Context
 {
     public class DatabaseContext : DbContext
     {
-        private RuntimeSettings settings { get; set; }
-
         public DatabaseContext()
         {
-        }
-
-        public DatabaseContext(IOptions<RuntimeSettings> appSettingsAccessor)
-        {
-            settings = appSettingsAccessor.Value;
         }
 
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
@@ -27,14 +20,31 @@ namespace Core.Database.Context
 #if DEBUG
                 .UseLoggerFactory(MyLoggerFactory)
 #endif
-                .UseSqlServer(DatabaseConnector.GetInstance().ConnectionString, providerOptions => providerOptions.CommandTimeout(60))
+                .UseSqlServer(AppConfig.ConnectionStrings.AzureDatabase, providerOptions => providerOptions.CommandTimeout(60))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Fields
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.ToTable("Account");
+
+                entity.Property(e => e.FirstName).HasMaxLength(200);
+                entity.Property(e => e.LastName).HasMaxLength(200);
+                entity.Property(e => e.Email).HasMaxLength(200);
+
+                entity.Property(e => e.PasswordHash).HasMaxLength(500);
+                entity.Property(e => e.PasswordSalt).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
@@ -43,6 +53,48 @@ namespace Core.Database.Context
                 entity.Property(e => e.LastName).HasMaxLength(200);
                 entity.Property(e => e.Email).HasMaxLength(200);
             });
+
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.ToTable("Company");
+
+                entity.Property(e => e.Name).HasMaxLength(200);
+                entity.Property(e => e.Description).HasMaxLength(2000);
+            });
+
+            modelBuilder.Entity<Department>(entity =>
+            {
+                entity.ToTable("Department");
+
+                entity.Property(e => e.Name).HasMaxLength(200);
+                entity.Property(e => e.Description).HasMaxLength(2000);
+            });
+            #endregion
+
+            #region Relationships
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.HasOne(e => e.User)
+                    .WithOne(e => e.Account)
+                    .HasForeignKey<User>(e => e.Id)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(e => e.Company)
+                    .WithMany(e => e.Accounts)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.HasMany(e => e.Departments)
+                    .WithOne(e => e.Company)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(e => e.Users)
+                    .WithOne(e => e.Company)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+            #endregion
         }
     }
 }

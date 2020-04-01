@@ -2,24 +2,24 @@
 using Amazon.SimpleSystemsManagement.Model;
 using System;
 
-namespace Core.Infrastructure
+namespace Infrastructure.Config
 {
-    public sealed class DatabaseConnector
+    public sealed class AwsDatabaseConnector
     {
-        static readonly DatabaseConnector instance = new DatabaseConnector();
+        static readonly AwsDatabaseConnector instance = new AwsDatabaseConnector();
 
-        public static DatabaseConnector GetInstance()
+        public static AwsDatabaseConnector GetInstance()
         {
             return instance;
         }
 
         public string ConnectionString { get; }
 
-        private DatabaseConnector()
+        private AwsDatabaseConnector()
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            var parameterName = $"/ConnectionString/{environment}/CHANGEME";
+            var parameterName = $"/ConnectionString/{environment}/Mankind";
 
             using (var client = new AmazonSimpleSystemsManagementClient())
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Config
+namespace Infrastructure.Config
 {
     public class RuntimeSettings
     {

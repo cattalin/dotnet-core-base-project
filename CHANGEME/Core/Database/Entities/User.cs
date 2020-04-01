@@ -1,14 +1,15 @@
-﻿using Core.Infrastructure;
-using System;
+﻿using Infrastructure.Base;
+using System.Collections.Generic;
 
 namespace Core.Database.Entities
 {
-    public class User : BaseEntity
+    public class User : BaseEntityOfCompany
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastUpdated { get; set; }
+
+        public virtual Account Account { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

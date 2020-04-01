@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Core.Database.Context
+namespace Infrastructure.Base
 {
-    public static class DatabaseContextExtensions
+    public static class BaseRepositoryContextExtensions
     {
         public static async Task<int> SaveChangesAndDetachAsync<T>(this DbContext context, T entity)
         {

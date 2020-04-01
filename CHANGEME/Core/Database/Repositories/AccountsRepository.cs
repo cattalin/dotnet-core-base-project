@@ -1,21 +1,33 @@
 ﻿using Core.Database.Context;
 using Core.Database.Entities;
 using Infrastructure.Base;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace Core.Database.Repositories
 {
-    public class UsersRepository : BaseRepository<User>
+    public class AccountsRepository : BaseRepository<Account>
     {
         private readonly IServiceScope scope;
         private readonly DatabaseContext context;
 
-        public UsersRepository(IServiceProvider serviceProvider)
+        public AccountsRepository(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
             scope = serviceProvider.CreateScope();
             context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        }
+
+        public Account FindByEmail(string email)
+        {
+            var entity = context.Accounts
+                .Where(x => x.Email == email)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return entity;
         }
     }
 }

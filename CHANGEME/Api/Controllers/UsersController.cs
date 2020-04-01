@@ -1,9 +1,8 @@
-﻿using Core.Config;
-using Core.Infrastructure;
+﻿using Infrastructure.Base;
 using Core.Managers;
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Api.Controllers
 {
@@ -11,12 +10,12 @@ namespace Api.Controllers
     public class UsersController : BaseController
     {
         private UsersManager usersManager { get; set; }
+
         public UsersController(
             UsersManager usersManager,
 
-            ILogger<UsersController> logger,
-            IOptions<RuntimeSettings> appSettingsAccessor
-        ) : base(logger, appSettingsAccessor)
+            ILogger<UsersController> logger
+        ) : base(logger)
         {
             this.usersManager = usersManager;
         }
@@ -24,26 +23,24 @@ namespace Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(settings.ConnectionString);
+            return Ok(usersManager.GetRawList(0, 10));
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
-            var xxx = DatabaseConnector.GetInstance().ConnectionString;
-            var result = usersManager.GetById(id);
-
-            return Ok(result);
+            return Ok(usersManager.GetRawById(id));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]string value)
+        public IActionResult Post([FromBody]UserDto newUser)
         {
-            return Ok();
+            var result = usersManager.CreateNew(newUser);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]UserDto newUser)
         {
             return Ok();
         }

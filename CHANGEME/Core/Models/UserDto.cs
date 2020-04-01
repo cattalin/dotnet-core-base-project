@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Base;
 
 namespace Core.Models
 {
-    public class UserDto
+    public class UserDto : BaseDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastUpdated { get; set; }
     }
 }
