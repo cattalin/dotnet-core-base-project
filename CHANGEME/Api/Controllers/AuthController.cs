@@ -1,25 +1,17 @@
 ﻿using Infrastructure.Base;
 using Core.Managers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Core.Models;
+using Core.Dtos;
 
 namespace Api.Controllers
 {
     [Route("api/auth")]
     public class AuthController : BaseController
     {
-        private UsersManager usersManager { get; set; }
         private AuthManager authManager { get; set; }
 
-        public AuthController(
-            UsersManager usersManager,
-            AuthManager authManager,
-
-            ILogger<AuthController> logger
-        ) : base(logger)
+        public AuthController(AuthManager authManager)
         {
-            this.usersManager = usersManager;
             this.authManager = authManager;
         }
 

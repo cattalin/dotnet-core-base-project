@@ -1,8 +1,7 @@
 ﻿using Infrastructure.Base;
 using Core.Managers;
-using Core.Models;
+using Core.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Api.Controllers
 {
@@ -12,10 +11,8 @@ namespace Api.Controllers
         private UsersManager usersManager { get; set; }
 
         public UsersController(
-            UsersManager usersManager,
-
-            ILogger<UsersController> logger
-        ) : base(logger)
+            UsersManager usersManager
+        )
         {
             this.usersManager = usersManager;
         }

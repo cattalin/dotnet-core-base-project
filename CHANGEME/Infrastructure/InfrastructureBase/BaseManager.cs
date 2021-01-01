@@ -8,14 +8,10 @@ namespace Infrastructure.Base
 {
     public class BaseManager
     {
-        protected ILogger logger { get; set; }
         protected IMapper mapper { get; set; }
 
-        public BaseManager(
-        ILogger logger
-        )
+        public BaseManager()
         {
-            this.logger = logger;
             mapper = BaseAutoMapperConfig.Mapper;
         }
     }
@@ -26,13 +22,9 @@ namespace Infrastructure.Base
         protected IMapper mapper { get; set; }
         protected TRepo mainRepository { get; set; }
 
-        public BaseManager(
-            TRepo mainRepository,
-            ILogger logger
-        )
+        public BaseManager(TRepo mainRepository)
         {
             this.mainRepository = mainRepository;
-            this.logger = logger;
             mapper = BaseAutoMapperConfig.Mapper;
         }
 

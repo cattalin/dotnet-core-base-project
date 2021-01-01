@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Base;
 
-namespace Core.Models
+namespace Core.Dtos
 {
     public class UserDto : BaseDto
     {

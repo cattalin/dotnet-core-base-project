@@ -1,9 +1,9 @@
 ﻿using Core.Database.Entities;
 using Core.Database.Repositories;
-using Core.Models;
+using Core.Dtos;
 using Infrastructure.Base;
 using Infrastructure.Exceptions;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -16,10 +16,8 @@ namespace Core.Managers
 
         public DataSeedingManager(
             AuthManager authManager,
-            DataSeedingRepository mainRepository,
-
-            ILogger<DataSeedingManager> logger
-        ) : base(logger)
+            DataSeedingRepository mainRepository
+        )
         {
             this.authManager = authManager;
             this.mainRepository = mainRepository;
@@ -57,7 +55,7 @@ namespace Core.Managers
                 }
                 catch (AccountExistingException ex)
                 {
-                    logger.LogError(ex, $"Account email generation collision");
+                    Log.Error(ex, $"Account email generation collision");
                 }
             }
 

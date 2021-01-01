@@ -2,9 +2,8 @@
 using Core.Database.Entities;
 using Core.Database.Repositories;
 using Infrastructure.Base;
-using Core.Models;
+using Core.Dtos;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -23,10 +22,8 @@ namespace Core.Managers
 
         public AuthManager(
             UsersRepository usersRepository,
-            AccountsRepository accountsRepository,
-
-            ILogger<AuthManager> logger
-        ) : base(logger)
+            AccountsRepository accountsRepository
+        )
         {
             this.usersRepository = usersRepository;
             this.accountsRepository = accountsRepository;

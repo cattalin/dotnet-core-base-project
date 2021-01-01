@@ -27,8 +27,8 @@ namespace Api
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseExceptionHandlingMiddleware();
-            app.UseLogRequestId();
+            app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseRouting();

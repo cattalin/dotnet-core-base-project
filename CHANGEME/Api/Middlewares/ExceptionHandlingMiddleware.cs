@@ -24,22 +24,34 @@ namespace Api.Middlewares
             }
             catch (Exception ex)
             {
-                var timestamp = DateTime.UtcNow;
-                Log.Error(ex, $"Unknown Error Caught at {timestamp}");
-                await HandleExceptionAsync(context, ex, timestamp);
+                Log.Error(ex, $"{ex.GetType().Name} Caught at {DateTime.UtcNow}");
+                await RespondToException(context, HttpStatusCode.InternalServerError, "Internal Server Error", ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception, DateTime timestamp)
+        private static Task RespondToException(HttpContext context, HttpStatusCode failureStatusCode, string message)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)failureStatusCode;
 
             return context.Response.WriteAsync(JsonConvert.SerializeObject(new
             {
-                Message = "Internal Server Error",
-                Timestamp = timestamp,
-                Exception = exception.Message
+                Message = message,
+                Timestamp = DateTime.UtcNow,
+            }));
+        }
+
+        private static Task RespondToException(HttpContext context, HttpStatusCode failureStatusCode, string message, Exception exception)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)failureStatusCode;
+
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(new
+            {
+                Message = message,
+                Details = exception.Message,
+                Type = exception.GetType().Name,
+                Timestamp = DateTime.UtcNow,
             }));
         }
     }
