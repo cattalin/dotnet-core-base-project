@@ -6,7 +6,6 @@ namespace Infrastructure.Config
 {
     public static class AppConfig
     {
-        public static RuntimeSettings RuntimeSettings { get; set; }
         public static ConnectionStringSettings ConnectionStrings { get; set; }
         public static AuthSettings AuthSettings { get; set; }
 
@@ -29,9 +28,6 @@ namespace Infrastructure.Config
 
         private static void Configure(IConfiguration Configuration)
         {
-            var runtimeSettings = Configuration.GetSection("RuntimeSettings");
-            RuntimeSettings = runtimeSettings.Get<RuntimeSettings>();
-
             var connectionStringSettings = Configuration.GetSection("ConnectionStrings");
             ConnectionStrings = connectionStringSettings.Get<ConnectionStringSettings>();
 
