@@ -18,9 +18,6 @@ namespace Api
     {
         public static void AddAppSettings(this IServiceCollection services, IConfiguration Configuration)
         {
-            var runtimeSettings = Configuration.GetSection("RuntimeSettings");
-            services.Configure<RuntimeSettings>(runtimeSettings);
-
             AppConfig.Init(Configuration);
         }
 
@@ -36,7 +33,7 @@ namespace Api
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mankind Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
         }
 
@@ -45,7 +42,7 @@ namespace Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mankind Api");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api");
             });
         }
 
