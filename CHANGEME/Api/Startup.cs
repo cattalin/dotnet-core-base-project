@@ -16,13 +16,18 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonSerializer();
             services.AddAppSettings(Configuration);
             services.AddDbContext(Configuration);
-            services.AddJwtAuthentication();
+
             services.AddAutoMapper();
+
             services.AddSwagger();
-            services.AddCoreModules();
+            services.AddJwtAuthentication();
+            services.AddHealthChecks();
+
+            services.AddCoreManagers();
+            services.AddCoreRepositories();
         }
 
         public void Configure(IApplicationBuilder app)

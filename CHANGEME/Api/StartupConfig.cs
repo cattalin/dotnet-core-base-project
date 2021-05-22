@@ -11,11 +11,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Api
 {
     public static class StartupConfig
     {
+        public static void AddJsonSerializer(this IMvcBuilder builder)
+        {
+            builder.AddNewtonsoftJson(x =>
+                {
+                    x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    x.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                }
+            );
+        }
+
         public static void AddAppSettings(this IServiceCollection services, IConfiguration Configuration)
         {
             AppConfig.Init(Configuration);
@@ -28,7 +39,7 @@ namespace Api
             services.AddTransient<DatabaseContext>();
             services.AddTransient<DbContext, DatabaseContext>();
         }
-        
+
         public static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
@@ -51,11 +62,14 @@ namespace Api
             AutoMapperConfig.Initialize();
         }
 
-        public static void AddCoreModules(this IServiceCollection services)
+        public static void AddCoreManagers(this IServiceCollection services)
         {
-            services.AddTransient<UsersManager>();
+            services.AddScoped<UsersManager>();
+        }
 
-            services.AddTransient<UsersRepository>();
+        public static void AddCoreRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<UsersRepository>();
         }
 
         public static void AddJwtAuthentication(this IServiceCollection services)
