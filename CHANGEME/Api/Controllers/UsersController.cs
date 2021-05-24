@@ -1,6 +1,6 @@
-﻿using Infrastructure.Base;
+﻿using Core.Dtos;
 using Core.Managers;
-using Core.Dtos;
+using Infrastructure.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -30,14 +30,14 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]UserDto newUser)
+        public IActionResult Post([FromBody] UserDto newUser)
         {
             var result = usersManager.CreateNew(newUser);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]UserDto newUser)
+        public IActionResult Put(int id, [FromBody] UserDto newUser)
         {
             return Ok();
         }

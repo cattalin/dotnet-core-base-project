@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Base;
-using System.Collections.Generic;
 
 namespace Core.Database.Entities
 {

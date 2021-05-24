@@ -1,8 +1,8 @@
-﻿using Infrastructure.Config;
-using Core.Database.Context;
+﻿using Core.Database.Context;
 using Core.Database.Repositories;
 using Core.Managers;
 using Core.Mapping;
+using Infrastructure.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Api
 {

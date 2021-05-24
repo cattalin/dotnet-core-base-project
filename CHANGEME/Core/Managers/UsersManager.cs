@@ -1,7 +1,7 @@
 ﻿using Core.Database.Entities;
 using Core.Database.Repositories;
-using Infrastructure.Base;
 using Core.Dtos;
+using Infrastructure.Base;
 
 namespace Core.Managers
 {

@@ -1,9 +1,7 @@
-﻿using Infrastructure.Config;
-using Core.Database.Entities;
+﻿using Core.Database.Entities;
+using Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace Core.Database.Context
 {

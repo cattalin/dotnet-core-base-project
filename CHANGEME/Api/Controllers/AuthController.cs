@@ -1,7 +1,7 @@
-﻿using Infrastructure.Base;
+﻿using Core.Dtos;
 using Core.Managers;
+using Infrastructure.Base;
 using Microsoft.AspNetCore.Mvc;
-using Core.Dtos;
 
 namespace Api.Controllers
 {
@@ -24,15 +24,15 @@ namespace Api.Controllers
 
             var status = authManager.Login(payload);
 
-            if(status.IsSuccessful)
+            if (status.IsSuccessful)
                 return Ok(status);
-            else 
+            else
                 return Unauthorized(status);
         }
 
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody]AuthRegisterDto payload)
+        public IActionResult Register([FromBody] AuthRegisterDto payload)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { Status = "Please complete all the fields" });

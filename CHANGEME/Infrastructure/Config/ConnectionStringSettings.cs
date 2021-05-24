@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Infrastructure.Config
+﻿namespace Infrastructure.Config
 {
     public class ConnectionStringSettings
     {

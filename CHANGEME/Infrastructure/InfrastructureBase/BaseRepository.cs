@@ -175,8 +175,8 @@ namespace Infrastructure.Base
         {
             if (rawContext != null)
                 rawContext.Dispose();
-            
-            if(scope!= null)
+
+            if (scope != null)
                 scope.Dispose();
         }
     }

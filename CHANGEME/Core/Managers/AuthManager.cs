@@ -1,8 +1,9 @@
-﻿using Infrastructure.Config;
-using Core.Database.Entities;
+﻿using Core.Database.Entities;
 using Core.Database.Repositories;
-using Infrastructure.Base;
 using Core.Dtos;
+using Infrastructure.Base;
+using Infrastructure.Config;
+using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,7 +12,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Infrastructure.Exceptions;
 
 namespace Core.Managers
 {
